@@ -2,14 +2,14 @@
 
 -- DML 3 solutions
 
---1
-SELECT D.NOMBRE, COUNT(*) "Nº PROFESORES"
+--1----------------------------------------------------------------------------
+SELECT D.NOMBRE, COUNT(*) "Nï¿½ PROFESORES"
 FROM DEPARTAMENTOS D, PROFESORES P
 WHERE P.DEPARTAMENTO = D.CODIGO
 GROUP BY D.NOMBRE;
 
 --2
-SELECT D.NOMBRE, SUM(CREDITOS) "CREDITOS DEL DEPARTAMENTO"
+SELECT D.NOMBRE, SUM(CREDITOS) "CRÃ‰DITOS DEL DEPARTAMENTO"
 FROM DEPARTAMENTOS D, ASIGNATURAS A
 WHERE D.CODIGO = A.DEPARTAMENTO
 GROUP BY D.NOMBRE;
@@ -29,7 +29,7 @@ WHERE P.ID = I.PROFESOR
 GROUP BY P.DESPACHO
 ;
 
---5 
+--5
 SELECT M.ASIGNATURA, AVG(DECODE(A.GENERO,'FEM',1,0))*100"PORCENTAJE"
 FROM ALUMNOS A, MATRICULAR M
 WHERE A.DNI = M.ALUMNO
@@ -59,7 +59,7 @@ WHERE AL.DNI = M.ALUMNO
                                     FROM MATRICULAR M, ASIGNATURAS A
                                     WHERE M.ASIGNATURA = A.CODIGO
                                     GROUP BY M.ALUMNO);
-                                    
+
 --9
 SELECT D.NOMBRE "DEPARTAMENTO", P.NOMBRE||' '||P.APELLIDO1 "PROFESOR"
 FROM PROFESORES P, DEPARTAMENTOS D
@@ -67,7 +67,7 @@ WHERE P.DEPARTAMENTO = D.CODIGO
       AND (P.DEPARTAMENTO, P.ANTIGUEDAD) IN (SELECT DEPARTAMENTO, MIN(ANTIGUEDAD)
                                               FROM PROFESORES
                                               GROUP BY DEPARTAMENTO);
-                                              
+
 --10
 SELECT D.NOMBRE, A.NOMBRE
 FROM DEPARTAMENTOS D, ASIGNATURAS A
@@ -127,7 +127,7 @@ FROM IMPARTIR I
 WHERE CURSO = '15/16'
       AND I.CARGA_CREDITOS < 6.5
 GROUP BY I.PROFESOR
-HAVING COUNT(*) >= 2; 
+HAVING COUNT(*) >= 2;
 
 
 --18
@@ -162,13 +162,13 @@ ORDER BY P1.NOMBRE;
 SELECT P1.NOMBRE||' '||P1.APELLIDO1||' '||P1.APELLIDO2 "PROFESOR 1", P2.NOMBRE||' '||P2.APELLIDO1||' '||P2.APELLIDO2 "PROFESOR 2"
 FROM PROFESORES P1, PROFESORES P2
 WHERE P1.ID < P2.ID
-      AND NOT EXISTS (SELECT * 
+      AND NOT EXISTS (SELECT *
                       FROM IMPARTIR I1, IMPARTIR I2
                       WHERE I1.PROFESOR = P1.ID
                             AND I2.PROFESOR = P2.ID
                             AND I1.ASIGNATURA = I2.ASIGNATURA);
 
---22 
+--22
 SELECT A.NOMBRE
 FROM ASIGNATURAS A
 WHERE A.CODIGO NOT IN (SELECT A.CODIGO
@@ -177,16 +177,16 @@ WHERE A.CODIGO NOT IN (SELECT A.CODIGO
                         AND M.ALUMNO = AL.DNI
                         GROUP BY ASIGNATURA
                         HAVING COUNT(CMUN) > 2);
-                  
--- 23 
+
+-- 23
 SELECT DISTINCT M.ALUMNO
-FROM MATRICULAR M NATURAL JOIN IMPARTIR I 
+FROM MATRICULAR M NATURAL JOIN IMPARTIR I
 WHERE I.PROFESOR NOT IN (SELECT P.ID
                           FROM PROFESORES P
                           WHERE P.FECHA_NACIMIENTO IN (SELECT MIN(FECHA_NACIMIENTO)
                               FROM PROFESORES));
- 
---24 
+
+--24
 SELECT M.ALUMNO
 FROM MATRICULAR M
 WHERE (M.ASIGNATURA, M.GRUPO, M.CURSO) NOT IN(SELECT I.ASIGNATURA, I.GRUPO, I.CURSO
@@ -201,13 +201,13 @@ ORDER BY M.ALUMNO;
 --25
 SELECT NOMBRE, CREDITOS, DEPARTAMENTO, CODIGO
 FROM ASIGNATURAS
-WHERE (CREDITOS, DEPARTAMENTO) IN (SELECT MAX(CREDITOS), DEPARTAMENTO 
-                                  FROM ASIGNATURAS 
+WHERE (CREDITOS, DEPARTAMENTO) IN (SELECT MAX(CREDITOS), DEPARTAMENTO
+                                  FROM ASIGNATURAS
                                   WHERE CODIGO NOT IN (SELECT ASIGNATURA
                                                         FROM PROFESORES P, IMPARTIR I
                                                         WHERE TO_DATE('01/01/1970')-FECHA_NACIMIENTO >= 0
                                                         AND I.PROFESOR = P.ID)
-                                  GROUP BY DEPARTAMENTO) 
+                                  GROUP BY DEPARTAMENTO)
       AND CODIGO NOT IN (SELECT ASIGNATURA
                                                         FROM PROFESORES P, IMPARTIR I
                                                         WHERE TO_DATE('01/01/1970')-FECHA_NACIMIENTO >= 0
@@ -233,8 +233,8 @@ WHERE AL.DNI = M.ALUMNO
                           FROM IMPARTIR I, ASIGNATURAS A
                           WHERE I.ASIGNATURA = A.CODIGO
                                 AND A.PRACTICOS > A.TEORICOS)
-                          
-                          
+
+
 GROUP BY I.PROFESOR;
 
 --28
@@ -253,7 +253,7 @@ WHERE A.DNI = M.ALUMNO
                                                                                   HAVING COUNT(*) > 3)
                                       GROUP BY M.ASIGNATURA);
 
--- ALUMNO MÁS ANTIGUO DE CADA ASIGNATURA
+-- ALUMNO Mï¿½S ANTIGUO DE CADA ASIGNATURA
 SELECT MIN(AL.FECHA_PRIM_MATRICULA), M.ASIGNATURA
 FROM ALUMNOS AL, ASIGNATURAS A, MATRICULAR M
 WHERE AL.DNI = M.ALUMNO
@@ -267,7 +267,7 @@ SELECT M.ASIGNATURA
                         GROUP BY M.ASIGNATURA
                         HAVING COUNT(*) > 3;
 
---29  
+--29
 (SELECT A.NOMBRE, COUNT(*)
 FROM ASIGNATURAS A, IMPARTIR I
 WHERE A.CODIGO IN (SELECT M.ASIGNATURA
