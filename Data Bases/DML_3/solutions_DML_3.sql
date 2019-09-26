@@ -253,7 +253,7 @@ WHERE A.DNI = M.ALUMNO
                                                                                   HAVING COUNT(*) > 3)
                                       GROUP BY M.ASIGNATURA);
 
--- ALUMNO M�S ANTIGUO DE CADA ASIGNATURA
+-- ALUMNO MÁS ANTIGUO DE CADA ASIGNATURA
 SELECT MIN(AL.FECHA_PRIM_MATRICULA), M.ASIGNATURA
 FROM ALUMNOS AL, ASIGNATURAS A, MATRICULAR M
 WHERE AL.DNI = M.ALUMNO
