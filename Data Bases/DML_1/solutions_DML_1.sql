@@ -2,143 +2,137 @@
 
 -- DML 1 solutions
 
--- 1. 
-select nombre, apellido1, apellido2, departamento
-from profesores
-where departamento = 1;
+-- 1.
+SELECT NOMBRE, APELLIDO1, APELLIDO2, DEPARTAMENTO
+FROM PROFESORES
+WHERE DEPARTAMENTO = 1;
 
 -- 2.
-select nombre, apellido1, apellido2, departamento
-from profesores
-where departamento != 3;
+SELECT NOMBRE, APELLIDO1, APELLIDO2, DEPARTAMENTO
+FROM PROFESORES
+WHERE DEPARTAMENTO != 3;
 
 -- 3.
-select nombre, apellido1, apellido2, email
-from profesores
-where email like '%lcc.uma.es';
+SELECT NOMBRE, APELLIDO1, APELLIDO2, EMAIL
+FROM PROFESORES
+WHERE EMAIL LIKE '%LCC.UMA.ES';
 
 -- 4.
-select nombre, apellido1, apellido2,  email
-from alumnos
-where email is null;
+SELECT NOMBRE, APELLIDO1, APELLIDO2,  EMAIL
+FROM ALUMNOS
+WHERE EMAIL IS NULL;
 
 -- 5.
-select nombre, curso, teoricos, practicos, teoricos+practicos, (teoricos*100)/(teoricos+practicos) "% TEORICO", (practicos*100)/(teoricos+practicos) "% PRACTICOS"
-from asignaturas
-where curso = 3;
+SELECT NOMBRE, CURSO, TEORICOS, PRACTICOS, TEORICOS+PRACTICOS, (TEORICOS*100)/(TEORICOS+PRACTICOS) "% TEORICO", (PRACTICOS*100)/(TEORICOS+PRACTICOS) "% PRACTICOS"
+FROM ASIGNATURAS
+WHERE CURSO = 3;
 
 -- otra forma:
-select nombre, creditos, round ((teoricos*100)/(teoricos+practicos), 2) as teor, round((practicos*100)/(teoricos+practicos), 2) as pract
-from asignaturas
-where curso = 3;
+SELECT NOMBRE, CREDITOS, ROUND ((TEORICOS*100)/(TEORICOS+PRACTICOS), 2) AS TEOR, ROUND((PRACTICOS*100)/(TEORICOS+PRACTICOS), 2) AS PRACT
+FROM ASIGNATURAS
+WHERE CURSO = 3;
 
 -- 6.
-select alumno, calificacion
-from matricular
-where asignatura = 112
-order by alumno;
+SELECT ALUMNO, CALIFICACION
+FROM MATRICULAR
+WHERE ASIGNATURA = 112
+ORDER BY ALUMNO;
 
 -- 7.
-select nombre, hombres, mujeres, hombres+mujeres
-from municipio;
+SELECT NOMBRE, HOMBRES, MUJERES, HOMBRES+MUJERES
+FROM MUNICIPIO;
 
 -- USO DE FUNCIONES
 
 -- 8.
-select 'El alumno ' || nombre || ' ' || apellido1 || ' ' || apellido2 || ' no dispone de correo' as Correos
-from alumnos
-where email is null
-      and genero = 'MASC'
-      
-union
+SELECT 'EL ALUMNO ' || NOMBRE || ' ' || APELLIDO1 || ' ' || APELLIDO2 || ' NO DISPONE DE CORREO' AS CORREOS
+FROM ALUMNOS
+WHERE EMAIL IS NULL
+      AND GENERO = 'MASC'
+
+UNION
 
 
-select 'La alumna ' || nombre || ' ' || apellido1 || ' ' || apellido2 || ' no dispone de correo'
-from alumnos
-where email is null
-      and genero like 'FEM'; 
+SELECT 'LA ALUMNA ' || NOMBRE || ' ' || APELLIDO1 || ' ' || APELLIDO2 || ' NO DISPONE DE CORREO'
+FROM ALUMNOS
+WHERE EMAIL IS NULL
+      AND GENERO LIKE 'FEM';
 
 
 -- otra manera:
+SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT('EL ALUMNO ', NOMBRE), ' ' ), APELLIDO1), ' '), APELLIDO2), ' NO DISPONE DE CORREO') "CORREOS"
+FROM ALUMNOS
+WHERE EMAIL IS NULL
+      AND GENERO = 'MASC'
 
-select concat(concat(concat(concat(concat(concat('El alumno ', nombre), ' ' ), apellido1), ' '), apellido2), ' no dispone de correo') "Correos"
-from alumnos
-where email is null
-      and genero = 'MASC'
-      
-union
+UNION
 
-
-select concat(concat(concat(concat(concat(concat('La alumna ', nombre), ' ' ), apellido1), ' '), apellido2), ' no dispone de correo')
-from alumnos
-where email is null
-      and genero like 'FEM'; 
+SELECT CONCAT(CONCAT(CONCAT(CONCAT(CONCAT(CONCAT('LA ALUMNA ', NOMBRE), ' ' ), APELLIDO1), ' '), APELLIDO2), ' NO DISPONE DE CORREO')
+FROM ALUMNOS
+WHERE EMAIL IS NULL
+      AND GENERO LIKE 'FEM';
 
 -- otra forma:
+SELECT DECODE('MASC',GENERO, 'EL ALUMNO ', 'LA ALUMNA ')||NOMBRE||' '||APELLIDO1||' '||APELLIDO2|| ' NO DISPONE DE CORREO'
+FROM ALUMNOS
+WHERE EMAIL IS NULL;
 
-select decode('MASC',genero, 'El alumno ', 'La alumna ')||nombre||' '||apellido1||' '||apellido2|| ' no dispone de correo'
-from alumnos
-where email is null;
-      
 -- 9.
-select nombre, apellido1, apellido2, antiguedad, antiguedad-to_date('01/01/1990', 'dd/mm/yyyy')
-from profesores
-where antiguedad-to_date('01/01/1990', 'dd/mm/yyyy') < 0;
+SELECT NOMBRE, APELLIDO1, APELLIDO2, ANTIGUEDAD, ANTIGUEDAD-TO_DATE('01/01/1990', 'DD/MM/YYYY')
+FROM PROFESORES
+WHERE ANTIGUEDAD-TO_DATE('01/01/1990', 'DD/MM/YYYY') < 0;
 
--- otra forma de hacerlo:
-select nombre, apellido1, apellido2, antiguedad, extract (year from antiguedad)
-from profesores
-where extract (year from antiguedad) < 1990;
+-- otra forma:
+SELECT NOMBRE, APELLIDO1, APELLIDO2, ANTIGUEDAD, EXTRACT (YEAR FROM ANTIGUEDAD)
+FROM PROFESORES
+WHERE EXTRACT (YEAR FROM ANTIGUEDAD) < 1990;
 
 -- 10.
-select nombre, apellido1, apellido2, fecha_nacimiento, trunc((months_between(sysdate, fecha_nacimiento))/12) as EDAD
-from profesores
-where trunc((months_between(sysdate, fecha_nacimiento))/12) < 30;
+SELECT NOMBRE, APELLIDO1, APELLIDO2, FECHA_NACIMIENTO, TRUNC((MONTHS_BETWEEN(SYSDATE, FECHA_NACIMIENTO))/12) AS EDAD
+FROM PROFESORES
+WHERE TRUNC((MONTHS_BETWEEN(SYSDATE, FECHA_NACIMIENTO))/12) < 30;
 
 -- 11.
-select upper(nombre), upper(apellido1), upper(apellido2), trunc(months_between(sysdate, antiguedad)/12/3) as trienios_docencia
-from profesores
-where trunc(months_between(sysdate, antiguedad)/12/3) > 3;
+SELECT UPPER(NOMBRE), UPPER(APELLIDO1), UPPER(APELLIDO2), TRUNC(MONTHS_BETWEEN(SYSDATE, ANTIGUEDAD)/12/3) AS TRIENIOS_DOCENCIA
+FROM PROFESORES
+WHERE TRUNC(MONTHS_BETWEEN(SYSDATE, ANTIGUEDAD)/12/3) > 3;
 
 -- 12.
-select nombre, upper(replace(nombre, 'Bases', 'Almacenes'))
-from asignaturas
-where nombre like '%Bases de Datos%'; -- el % debe ir delante, no detrás.
+SELECT NOMBRE, UPPER(REPLACE(NOMBRE, 'BASES', 'ALMACENES'))
+FROM ASIGNATURAS
+WHERE NOMBRE LIKE '%BASES DE DATOS%';
 
--- Otra forma
-
-select replace(upper(nombre), 'BASES DE DATOS', 'ALMACENES DE DATOS')
-from asignaturas
-where lower (nombre) like '%bases de datos%';
+-- Otra forma:
+SELECT REPLACE(UPPER(NOMBRE), 'BASES DE DATOS', 'ALMACENES DE DATOS')
+FROM ASIGNATURAS
+WHERE LOWER (NOMBRE) LIKE '%BASES DE DATOS%';
 
 -- 13.
-select nombre, nvl(to_char(creditos), 'NO ASIGNADO'), caracter
-from asignaturas
-where caracter = 'OP' or caracter = 'OB'; 
+SELECT NOMBRE, NVL(TO_CHAR(CREDITOS), 'NO ASIGNADO'), CARACTER
+FROM ASIGNATURAS
+WHERE CARACTER = 'OP' OR CARACTER = 'OB';
 
--- puedo simplificar la consulta ya que OP y OB son las únicas que empiezan por O:
+-- simplificado:
+SELECT NOMBRE, NVL(TO_CHAR(CREDITOS), 'NO ASIGNADO'), CARACTER
+FROM ASIGNATURAS
+WHERE CARACTER LIKE 'O%';
 
-select nombre, nvl(to_char(creditos), 'NO ASIGNADO'), caracter
-from asignaturas
-where caracter like 'O%'; --(también puedo usar 0% o O_)
-
--- otra forma
-
-select nombre, nvl(to_char(creditos), 'No asignado'), caracter
-from asignaturas
-where caracter like 'O%';
+-- otra forma:
+SELECT NOMBRE, NVL(TO_CHAR(CREDITOS), 'NO ASIGNADO'), CARACTER
+FROM ASIGNATURAS
+WHERE CARACTER LIKE 'O%';
 
 -- 14.
-select dni, nombre, apellido1, apellido2, fecha_prim_matricula,  trunc(months_between(sysdate, fecha_prim_matricula)) as meses_matriculado
-from alumnos
-where (months_between(sysdate, fecha_prim_matricula)) < 2;
+SELECT DNI, NOMBRE, APELLIDO1, APELLIDO2, FECHA_PRIM_MATRICULA,  TRUNC(MONTHS_BETWEEN(SYSDATE, FECHA_PRIM_MATRICULA)) AS MESES_MATRICULADO
+FROM ALUMNOS
+WHERE (MONTHS_BETWEEN(SYSDATE, FECHA_PRIM_MATRICULA)) < 2;
 
 -- 15.
-select nombre, fecha_nacimiento, fecha_prim_matricula, trunc(months_between(fecha_prim_matricula, fecha_nacimiento)/12) as años_prim_matricula
-from alumnos
-where (months_between(fecha_prim_matricula, fecha_nacimiento)/12) < 18;
+SELECT NOMBRE, FECHA_NACIMIENTO, FECHA_PRIM_MATRICULA, TRUNC(MONTHS_BETWEEN(FECHA_PRIM_MATRICULA, FECHA_NACIMIENTO)/12) AS Aï¿½OS_PRIM_MATRICULA
+FROM ALUMNOS
+WHERE (MONTHS_BETWEEN(FECHA_PRIM_MATRICULA, FECHA_NACIMIENTO)/12) < 18;
 
 -- 16.
-select nombre, fecha_prim_matricula, to_char(fecha_prim_matricula, 'Day') as día_matriculación
-from alumnos
-where to_char(fecha_prim_matricula, 'Day') like 'Lunes%';
+SELECT NOMBRE, FECHA_PRIM_MATRICULA, TO_CHAR(FECHA_PRIM_MATRICULA, 'DAY') AS Dï¿½A_MATRICULACIï¿½N
+FROM ALUMNOS
+WHERE TO_CHAR(FECHA_PRIM_MATRICULA, 'DAY') LIKE 'LUNES%';

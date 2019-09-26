@@ -2,415 +2,409 @@
 
 -- DML 2 solutions: Funciones, Reuniones y Operaciones de Conjuntos
 
-
--------------------- Reunión de tablas------------------------------------------------------------------------------------
+-------------------- Reuniï¿½n de tablas------------------------------------------------------------------------------------
 -- Ejercicio 1
-select p.nombre, p.apellido1, p.apellido2, d.nombre
-from profesores p, departamentos d
-where p.departamento = d.codigo             
-      and d.nombre like 'Lenguaje%';        
+SELECT P.NOMBRE, P.APELLIDO1, P.APELLIDO2, D.NOMBRE
+FROM PROFESORES P, DEPARTAMENTOS D
+WHERE P.DEPARTAMENTO = D.CODIGO
+      AND D.NOMBRE LIKE 'LENGUAJE%';
 
 -- Ejercicio 2
-select a.nombre, a.apellido1, a.apellido2, m.asignatura, asig.nombre, m.curso, nvl(to_char(asig.practicos), 'No tiene')
-from alumnos a, matricular m, asignaturas asig
-where a.dni = m.alumno 
-      and upper(a.nombre) = 'NICOLAS'
-      and upper(a.apellido1) = 'BERSABE'
-      and upper(a.apellido2) = 'ALBA'
-      and asig.codigo = m.asignatura;
- 
+SELECT A.NOMBRE, A.APELLIDO1, A.APELLIDO2, M.ASIGNATURA, ASIG.NOMBRE, M.CURSO, NVL(TO_CHAR(ASIG.PRACTICOS), 'NO TIENE')
+FROM ALUMNOS A, MATRICULAR M, ASIGNATURAS ASIG
+WHERE A.DNI = M.ALUMNO
+      AND UPPER(A.NOMBRE) = 'NICOLAS'
+      AND UPPER(A.APELLIDO1) = 'BERSABE'
+      AND UPPER(A.APELLIDO2) = 'ALBA'
+      AND ASIG.CODIGO = M.ASIGNATURA;
+
 -- Otra manera de hacerlo:
-select asig.codigo, asig.nombre, nvl(to_char(practicos), 'No tiene') PRACTICOS, mat.curso 
-from asignaturas asig join matricular mat on(asig.codigo = mat.asignatura)
-                      join alumnos alum on(mat.alumno = alum.dni)
-where alum.nombre = 'Nicolas' 
-      and alum.apellido1 = 'Bersabe'
-      and alum.apellido2 = 'Alba';  
-      
+SELECT ASIG.CODIGO, ASIG.NOMBRE, NVL(TO_CHAR(PRACTICOS), 'NO TIENE') PRACTICOS, MAT.CURSO
+FROM ASIGNATURAS ASIG JOIN MATRICULAR MAT ON(ASIG.CODIGO = MAT.ASIGNATURA)
+                      JOIN ALUMNOS ALUM ON(MAT.ALUMNO = ALUM.DNI)
+WHERE ALUM.NOMBRE = 'NICOLAS'
+      AND ALUM.APELLIDO1 = 'BERSABE'
+      AND ALUM.APELLIDO2 = 'ALBA';
+
 -- Ejercicio 3
-select p.nombre, p.apellido1, p.apellido2, d.nombre, trunc((sysdate - p.antiguedad)/7) as SEMANAS_DOCENCIA, next_day(sysdate, to_char(antiguedad, 'day')) "Se cumple semana"
-from profesores p, departamentos d
-where p.departamento = d.codigo
-      and d.nombre = 'Ingenieria de Comunicaciones';
+SELECT P.NOMBRE, P.APELLIDO1, P.APELLIDO2, D.NOMBRE, TRUNC((SYSDATE - P.ANTIGUEDAD)/7) AS SEMANAS_DOCENCIA, NEXT_DAY(SYSDATE, TO_CHAR(ANTIGUEDAD, 'DAY')) "SE CUMPLE SEMANA"
+FROM PROFESORES P, DEPARTAMENTOS D
+WHERE P.DEPARTAMENTO = D.CODIGO
+      AND D.NOMBRE = 'INGENIERIA DE COMUNICACIONES';
 
 -- Ejercicio 4
-select a.dni, a.nombre, a.apellido1, a.apellido2 
-from alumnos a, matricular m, asignaturas asig
-where a.dni = m.alumno
-      and m.asignatura = asig.codigo
-      and asig.nombre = 'Bases de Datos'
-      and m.calificacion != 'SP';
+SELECT A.DNI, A.NOMBRE, A.APELLIDO1, A.APELLIDO2
+FROM ALUMNOS A, MATRICULAR M, ASIGNATURAS ASIG
+WHERE A.DNI = M.ALUMNO
+      AND M.ASIGNATURA = ASIG.CODIGO
+      AND ASIG.NOMBRE = 'BASES DE DATOS'
+      AND M.CALIFICACION != 'SP';
 
 -- Ejercicio 5
-select p.id, p.nombre, p.apellido1, p.apellido2, a.codigo, a.nombre
-from profesores p, impartir i, asignaturas a
-where p.id = i.profesor
-      and i.asignatura = a.codigo;
-      
--------------------- Consultas reflexivas ------------------------------------------------------------------------------------ 
--- Ejercicio 6 (debo hacer que ROMERO y Romero se cuente en la solución!)
-select a1.nombre, trunc(months_between(sysdate, a1.fecha_nacimiento)/12) "EDAD 1", a2.nombre, trunc(months_between(sysdate, a2.fecha_nacimiento)/12, 0) "EDAD 2"
-from alumnos a1, alumnos a2
-where upper(a1.apellido1) = upper(a2.apellido1)
-      and a1.dni < a2.dni;
-      
--- Ejercicio 7 
-select alu1.apellido1 "Primer apellido", alu2.apellido1
-from alumnos alu1, alumnos alu2
-where to_char(alu1.fecha_nacimiento, 'yyyy') between 1995 and 1996
-      and to_char(alu2.fecha_nacimiento, 'yyyy') between 1995 and 1996
-      and alu1.dni < alu2.dni;
+SELECT P.ID, P.NOMBRE, P.APELLIDO1, P.APELLIDO2, A.CODIGO, A.NOMBRE
+FROM PROFESORES P, IMPARTIR I, ASIGNATURAS A
+WHERE P.ID = I.PROFESOR
+      AND I.ASIGNATURA = A.CODIGO;
 
-select alu1.apellido1 "Primer apellido", alu2.apellido1
-from alumnos alu1, alumnos alu2
-where and extract(year from alu1.fecha_nacimiento) between 1995 and 1996
-      and extract(year from alu2.fecha_nacimiento) between 1995 and 1996
-      and alu1.dni < alu2.dni;
+-------------------- Consultas reflexivas ------------------------------------------------------------------------------------
+-- Ejercicio 6
+SELECT A1.NOMBRE, TRUNC(MONTHS_BETWEEN(SYSDATE, A1.FECHA_NACIMIENTO)/12) "EDAD 1", A2.NOMBRE, TRUNC(MONTHS_BETWEEN(SYSDATE, A2.FECHA_NACIMIENTO)/12, 0) "EDAD 2"
+FROM ALUMNOS A1, ALUMNOS A2
+WHERE UPPER(A1.APELLIDO1) = UPPER(A2.APELLIDO1)
+      AND A1.DNI < A2.DNI;
+
+-- Ejercicio 7
+SELECT ALU1.APELLIDO1 "PRIMER APELLIDO", ALU2.APELLIDO1
+FROM ALUMNOS ALU1, ALUMNOS ALU2
+WHERE TO_CHAR(ALU1.FECHA_NACIMIENTO, 'YYYY') BETWEEN 1995 AND 1996
+      AND TO_CHAR(ALU2.FECHA_NACIMIENTO, 'YYYY') BETWEEN 1995 AND 1996
+      AND ALU1.DNI < ALU2.DNI;
+
+-- otra forma:
+SELECT ALU1.APELLIDO1 "PRIMER APELLIDO", ALU2.APELLIDO1
+FROM ALUMNOS ALU1, ALUMNOS ALU2
+WHERE AND EXTRACT(YEAR FROM ALU1.FECHA_NACIMIENTO) BETWEEN 1995 AND 1996
+      AND EXTRACT(YEAR FROM ALU2.FECHA_NACIMIENTO) BETWEEN 1995 AND 1996
+      AND ALU1.DNI < ALU2.DNI;
 
 -- Ejercicio 8
-select p1.nombre, p1.apellido1, p2.nombre, p2.apellido1, trunc(months_between(sysdate, p1.antiguedad)/12) "Años 1", trunc(months_between(sysdate, p2.antiguedad)/12) "Años 2"
-from profesores p1, profesores p2
-where p1.departamento = p2.departamento
-      and p1.id < p2.id
-      and trunc(abs(months_between(p1.antiguedad, p2.antiguedad))/12) < 2;
-      
--- Ejercicio 9 
-select a1.nombre, m1.calificacion, a2.nombre, m2.calificacion
-from alumnos a1, alumnos a2, matricular m1, matricular m2
-where a1.genero = 'MASC'
-      and a2.genero = 'FEM'
-      and a1.dni = m1.alumno
-      and a2.dni = m2.alumno
-      and m1.asignatura = 112
-      and m2.asignatura = 112
-      and to_char(a1.fecha_prim_matricula, 'ww') = to_char(a2.fecha_prim_matricula, 'ww');
-      
--- Ejercicio 9 
-select a1.nombre as EL, m1.calificacion, a2.nombre as ELLA, m2.calificacion
-from alumnos a1, alumnos a2, matricular m1, matricular m2
-where a1.genero = 'MASC'
-      and a2.genero = 'FEM'
-      and a1.dni = m1.alumno
-      and a2.dni = m2.alumno
-      and m1.asignatura = 112
-      and m2.asignatura = 112
-      and m1.curso = m2.curso 
-      and to_char(a1.fecha_prim_matricula, 'ww') = to_char(a2.fecha_prim_matricula, 'ww')
-      and decode(NVL(m1.calificacion, 'SP'), 'SP', 0, 'AP', 5, 'NT', 8, 'SB', 9, 10) <= decode(NVL(m2.calificacion, 'SP'), 'SP', 0, 'AP', 5, 'NT', 8, 'SB', 9, 10);
-  
+SELECT P1.NOMBRE, P1.APELLIDO1, P2.NOMBRE, P2.APELLIDO1, TRUNC(MONTHS_BETWEEN(SYSDATE, P1.ANTIGUEDAD)/12) "Aï¿½OS 1", TRUNC(MONTHS_BETWEEN(SYSDATE, P2.ANTIGUEDAD)/12) "Aï¿½OS 2"
+FROM PROFESORES P1, PROFESORES P2
+WHERE P1.DEPARTAMENTO = P2.DEPARTAMENTO
+      AND P1.ID < P2.ID
+      AND TRUNC(ABS(MONTHS_BETWEEN(P1.ANTIGUEDAD, P2.ANTIGUEDAD))/12) < 2;
 
-select alumno, calificacion, decode(NVL(calificacion, 'SP'), 'SP', 0, 'AP', 5, 'NT', 8, 'SB', 9, 10)
-from matricular;
+-- Ejercicio 9
+SELECT A1.NOMBRE, M1.CALIFICACION, A2.NOMBRE, M2.CALIFICACION
+FROM ALUMNOS A1, ALUMNOS A2, MATRICULAR M1, MATRICULAR M2
+WHERE A1.GENERO = 'MASC'
+      AND A2.GENERO = 'FEM'
+      AND A1.DNI = M1.ALUMNO
+      AND A2.DNI = M2.ALUMNO
+      AND M1.ASIGNATURA = 112
+      AND M2.ASIGNATURA = 112
+      AND TO_CHAR(A1.FECHA_PRIM_MATRICULA, 'WW') = TO_CHAR(A2.FECHA_PRIM_MATRICULA, 'WW');
+
+-- Ejercicio 9
+SELECT A1.NOMBRE AS EL, M1.CALIFICACION, A2.NOMBRE AS ELLA, M2.CALIFICACION
+FROM ALUMNOS A1, ALUMNOS A2, MATRICULAR M1, MATRICULAR M2
+WHERE A1.GENERO = 'MASC'
+      AND A2.GENERO = 'FEM'
+      AND A1.DNI = M1.ALUMNO
+      AND A2.DNI = M2.ALUMNO
+      AND M1.ASIGNATURA = 112
+      AND M2.ASIGNATURA = 112
+      AND M1.CURSO = M2.CURSO
+      AND TO_CHAR(A1.FECHA_PRIM_MATRICULA, 'WW') = TO_CHAR(A2.FECHA_PRIM_MATRICULA, 'WW')
+      AND DECODE(NVL(M1.CALIFICACION, 'SP'), 'SP', 0, 'AP', 5, 'NT', 8, 'SB', 9, 10) <= DECODE(NVL(M2.CALIFICACION, 'SP'), 'SP', 0, 'AP', 5, 'NT', 8, 'SB', 9, 10);
+
+
+SELECT ALUMNO, CALIFICACION, DECODE(NVL(CALIFICACION, 'SP'), 'SP', 0, 'AP', 5, 'NT', 8, 'SB', 9, 10)
+FROM MATRICULAR;
 
 -- Ejercicio 9 FINAL
-select a1.nombre||' '||a1.apellido1 as EL, decode(m1.calificacion,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0) "Nota él", a2.nombre||' '||a2.apellido1 as ELLA, decode(m2.calificacion,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0) "Nota ella"
-from alumnos a1, alumnos a2, matricular m1, matricular m2
-where a1.genero = 'MASC'
-      and a2.genero = 'FEM'
-      and a1.dni = m1.alumno
-      and a2.dni = m2.alumno
-      and m1.asignatura = 112
-      and m2.asignatura = 112
-      and to_char(a1.fecha_prim_matricula, 'ww') = to_char(a2.fecha_prim_matricula, 'ww')
-      and decode(m1.calificacion,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0) < decode(m2.calificacion,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0);
-     
+SELECT A1.NOMBRE||' '||A1.APELLIDO1 AS EL, DECODE(M1.CALIFICACION,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0) "NOTA ï¿½L", A2.NOMBRE||' '||A2.APELLIDO1 AS ELLA, DECODE(M2.CALIFICACION,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0) "NOTA ELLA"
+FROM ALUMNOS A1, ALUMNOS A2, MATRICULAR M1, MATRICULAR M2
+WHERE A1.GENERO = 'MASC'
+      AND A2.GENERO = 'FEM'
+      AND A1.DNI = M1.ALUMNO
+      AND A2.DNI = M2.ALUMNO
+      AND M1.ASIGNATURA = 112
+      AND M2.ASIGNATURA = 112
+      AND TO_CHAR(A1.FECHA_PRIM_MATRICULA, 'WW') = TO_CHAR(A2.FECHA_PRIM_MATRICULA, 'WW')
+      AND DECODE(M1.CALIFICACION,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0) < DECODE(M2.CALIFICACION,'MH',10,'SB',9,'NT',7,'AP',5,'SP',2,0);
 
 -- Ejercicio 10
-select a1.nombre, a2.nombre, a3.nombre, a1.cod_materia, a2.cod_materia, a3.cod_materia
-from asignaturas a1, asignaturas a2, asignaturas a3
-where a1.cod_materia = a2.cod_materia
-      and a2.cod_materia = a3.cod_materia
-      and a1.codigo < a2.codigo
-      and a2.codigo < a3.codigo;
+SELECT A1.NOMBRE, A2.NOMBRE, A3.NOMBRE, A1.COD_MATERIA, A2.COD_MATERIA, A3.COD_MATERIA
+FROM ASIGNATURAS A1, ASIGNATURAS A2, ASIGNATURAS A3
+WHERE A1.COD_MATERIA = A2.COD_MATERIA
+      AND A2.COD_MATERIA = A3.COD_MATERIA
+      AND A1.CODIGO < A2.CODIGO
+      AND A2.CODIGO < A3.CODIGO;
 
--------------------------------------Reunión de tablas + orden-----------------------------------------------------
-      
--- Ejercicio 11 (No trunca la edad !)
-select alu.nombre, alu.apellido1, alu.apellido2, asig.nombre, decode(mat.calificacion, 'MH', 'Matrícula de honor',
-                                                                                       'SB', 'Sobresaliente',
-                                                                                       'NT', 'Notable',
-                                                                                       'AP', 'Aprobado',
-                                                                                       'SP', 'Suspenso',
-                                                                                       'No presentado') -- no presentado by default
-from alumnos alu, matricular mat, asignaturas asig
-where alu.dni = mat.alumno
-      and  mat.asignatura = asig.codigo
-      and (months_between(sysdate, fecha_nacimiento)/12) > 22
-      order by alu.apellido1, alu.nombre;
+-------------------------------------Reuniï¿½n de tablas + orden-----------------------------------------------------
+
+-- Ejercicio 11
+SELECT ALU.NOMBRE, ALU.APELLIDO1, ALU.APELLIDO2, ASIG.NOMBRE, DECODE(MAT.CALIFICACION, 'MH', 'MATRï¿½CULA DE HONOR',
+                                                                                       'SB', 'SOBRESALIENTE',
+                                                                                       'NT', 'NOTABLE',
+                                                                                       'AP', 'APROBADO',
+                                                                                       'SP', 'SUSPENSO',
+                                                                                       'NO PRESENTADO') --by default
+FROM ALUMNOS ALU, MATRICULAR MAT, ASIGNATURAS ASIG
+WHERE ALU.DNI = MAT.ALUMNO
+      AND  MAT.ASIGNATURA = ASIG.CODIGO
+      AND (MONTHS_BETWEEN(SYSDATE, FECHA_NACIMIENTO)/12) > 22
+      ORDER BY ALU.APELLIDO1, ALU.NOMBRE;
 
 -- Ejercicio 12
-select alu.nombre, alu.apellido1, alu.apellido2
-from impartir imp, profesores pro, asignaturas asig, alumnos alu, matricular mat
-where imp.profesor=pro.id
-      and UPPER(pro.nombre) = 'ENRIQUE'
-      and UPPER(pro.apellido1) = 'SOLER'
-      and imp.asignatura = asig.codigo
-      and alu.dni = mat.alumno
-      and mat.asignatura = imp.asignatura
-      and mat.curso = imp.curso
-      and mat.grupo = imp.grupo
-order by alu.apellido1, alu.nombre;
+SELECT ALU.NOMBRE, ALU.APELLIDO1, ALU.APELLIDO2
+FROM IMPARTIR IMP, PROFESORES PRO, ASIGNATURAS ASIG, ALUMNOS ALU, MATRICULAR MAT
+WHERE IMP.PROFESOR=PRO.ID
+      AND UPPER(PRO.NOMBRE) = 'ENRIQUE'
+      AND UPPER(PRO.APELLIDO1) = 'SOLER'
+      AND IMP.ASIGNATURA = ASIG.CODIGO
+      AND ALU.DNI = MAT.ALUMNO
+      AND MAT.ASIGNATURA = IMP.ASIGNATURA
+      AND MAT.CURSO = IMP.CURSO
+      AND MAT.GRUPO = IMP.GRUPO
+ORDER BY ALU.APELLIDO1, ALU.NOMBRE;
 
 -- otra forma
-select alu.nombre, alu.apellido1, alu.apellido2
-from alumnos alu, matricular mat natural join impartir imp, profesores pro
-where alu.dni = mat.alumno
-      and imp.profesor = pro.id
-      and pro.nombre = 'Enrique'
-      and pro.apellido1 = 'Soler'
-order by alu.apellido1, apellido2, nombre;
+SELECT ALU.NOMBRE, ALU.APELLIDO1, ALU.APELLIDO2
+FROM ALUMNOS ALU, MATRICULAR MAT NATURAL JOIN IMPARTIR IMP, PROFESORES PRO
+WHERE ALU.DNI = MAT.ALUMNO
+      AND IMP.PROFESOR = PRO.ID
+      AND PRO.NOMBRE = 'ENRIQUE'
+      AND PRO.APELLIDO1 = 'SOLER'
+ORDER BY ALU.APELLIDO1, APELLIDO2, NOMBRE;
 
 
 -- Ejercicio 13-------------------------------------------------------------------
-select alu.nombre, alu.apellido1, alu.apellido2
-from profesores pro, departamentos dep, impartir imp, alumnos alu, matricular mat
-where pro.departamento = dep.codigo
-      and dep.nombre = 'Lenguajes y Ciencias de la Computacion'        
-      and imp.profesor = pro.id
-      and alu.dni = mat.alumno
-      and mat.asignatura = imp.asignatura
-      and mat.grupo = imp.grupo
-      and mat.curso = imp.curso
-order by alu.apellido1;
+SELECT ALU.NOMBRE, ALU.APELLIDO1, ALU.APELLIDO2
+FROM PROFESORES PRO, DEPARTAMENTOS DEP, IMPARTIR IMP, ALUMNOS ALU, MATRICULAR MAT
+WHERE PRO.DEPARTAMENTO = DEP.CODIGO
+      AND DEP.NOMBRE = 'LENGUAJES Y CIENCIAS DE LA COMPUTACION'
+      AND IMP.PROFESOR = PRO.ID
+      AND ALU.DNI = MAT.ALUMNO
+      AND MAT.ASIGNATURA = IMP.ASIGNATURA
+      AND MAT.GRUPO = IMP.GRUPO
+      AND MAT.CURSO = IMP.CURSO
+ORDER BY ALU.APELLIDO1;
 
 -- otra manera:
-select distinct alu.nombre, alu.apellido1, alu.apellido2
-from profesores pro, departamentos dep, alumnos alu, matricular mat natural join impartir imp
-where pro.departamento = dep.codigo
-      and imp.profesor = pro.id
-      and lower(dep.nombre) = 'lenguajes y ciencias de la computacion'
-      and alu.dni = mat.alumno
-order by alu.apellido1;
+SELECT DISTINCT ALU.NOMBRE, ALU.APELLIDO1, ALU.APELLIDO2
+FROM PROFESORES PRO, DEPARTAMENTOS DEP, ALUMNOS ALU, MATRICULAR MAT NATURAL JOIN IMPARTIR IMP
+WHERE PRO.DEPARTAMENTO = DEP.CODIGO
+      AND IMP.PROFESOR = PRO.ID
+      AND LOWER(DEP.NOMBRE) = 'LENGUAJES Y CIENCIAS DE LA COMPUTACION'
+      AND ALU.DNI = MAT.ALUMNO
+ORDER BY ALU.APELLIDO1;
 
--- Ejercicio 14 ------------------------------------------------------------------
-
-select asig.nombre as Asignatura, mat.nombre as Materia, pro.nombre||' '||pro.apellido1||' '||pro.apellido2 as Profesor, imp.carga_creditos "CARGA CRÉDITOS"
-from profesores pro, impartir imp, asignaturas asig, materias mat
-where pro.id = imp.profesor
-      and asig.codigo = imp.asignatura
-      and mat.codigo = asig.cod_materia
-      and imp.carga_creditos is not null
-order by mat.codigo, asig.nombre desc   
+-- Ejercicio 14 -----------------------------------------------------------------
+SELECT ASIG.NOMBRE AS ASIGNATURA, MAT.NOMBRE AS MATERIA, PRO.NOMBRE||' '||PRO.APELLIDO1||' '||PRO.APELLIDO2 AS PROFESOR, IMP.CARGA_CREDITOS "CARGA CRï¿½DITOS"
+FROM PROFESORES PRO, IMPARTIR IMP, ASIGNATURAS ASIG, MATERIAS MAT
+WHERE PRO.ID = IMP.PROFESOR
+      AND ASIG.CODIGO = IMP.ASIGNATURA
+      AND MAT.CODIGO = ASIG.COD_MATERIA
+      AND IMP.CARGA_CREDITOS IS NOT NULL
+ORDER BY MAT.CODIGO, ASIG.NOMBRE DESC
 ;
 
 -- Ejercicio 15 ---------------------------------------------------------------------
-select asig.nombre "Asignatura", dep.nombre "Departamento", asig.creditos "Créditos", round((asig.practicos*100)/asig.creditos, 2) "% Prácticos" 
-from asignaturas asig, departamentos dep
-where asig.departamento = dep.codigo
-      and asig.creditos is not null
-      and asig.practicos is not null
-      and asig.teoricos is not null
-order by round((asig.practicos*100)/asig.creditos, 4) desc
+SELECT ASIG.NOMBRE "ASIGNATURA", DEP.NOMBRE "DEPARTAMENTO", ASIG.CREDITOS "CRï¿½DITOS", ROUND((ASIG.PRACTICOS*100)/ASIG.CREDITOS, 2) "% PRï¿½CTICOS"
+FROM ASIGNATURAS ASIG, DEPARTAMENTOS DEP
+WHERE ASIG.DEPARTAMENTO = DEP.CODIGO
+      AND ASIG.CREDITOS IS NOT NULL
+      AND ASIG.PRACTICOS IS NOT NULL
+      AND ASIG.TEORICOS IS NOT NULL
+ORDER BY ROUND((ASIG.PRACTICOS*100)/ASIG.CREDITOS, 4) DESC
 ;
 
 -- Ejercicio 16 --------------------------------------------------------------------
-(select codigo
-from asignaturas)
-minus
-(select codigo
-from asignaturas asig, impartir imp
-where asig.codigo = imp.asignatura);
-
+(SELECT CODIGO
+FROM ASIGNATURAS)
+MINUS
+(SELECT CODIGO
+FROM ASIGNATURAS ASIG, IMPARTIR IMP
+WHERE ASIG.CODIGO = IMP.ASIGNATURA);
 
 -- Ejercicio 17 -------------------------------------------------------------------
-(select email
-from profesores
-where email is not null)
-union all 
-(select email
-from alumnos
-where email is  not null);
+(SELECT EMAIL
+FROM PROFESORES
+WHERE EMAIL IS NOT NULL)
+UNION ALL
+(SELECT EMAIL
+FROM ALUMNOS
+WHERE EMAIL IS  NOT NULL);
 
 -- Ejercicio 18 ------------------------------------------------------------------
-
-((select initcap(apellido1) from profesores where apellido1 is not null)
-intersect
-(select initcap(apellido1) from alumnos where apellido1 is not null))
-union
-((select initcap(apellido1) from profesores where apellido1 is not null)
-intersect
-(select initcap(apellido2) from alumnos where apellido2 is not null))
-union
-((select initcap(apellido2) from profesores where apellido2 is not null)
-intersect
-(select initcap(apellido1) from alumnos where apellido1 is not null))
-union
-((select initcap(apellido2) from profesores where apellido2 is not null)
-intersect
-(select initcap(apellido2) from alumnos where apellido2 is not null));
-
---  mejor opción
-select distinct initcap(alu.apellido1)
-from alumnos alu, profesores pro
-where lower(alu.apellido1) = lower(pro.apellido1) or lower(alu.apellido1) = lower(pro.apellido2)
+((SELECT INITCAP(APELLIDO1) FROM PROFESORES WHERE APELLIDO1 IS NOT NULL)
+INTERSECT
+(SELECT INITCAP(APELLIDO1) FROM ALUMNOS WHERE APELLIDO1 IS NOT NULL))
 UNION
-select distinct initcap(alu.apellido2)
-from alumnos alu, profesores pro
-where lower(alu.apellido2) = lower(pro.apellido1) or lower(alu.apellido2) = lower(pro.apellido2);
-      
+((SELECT INITCAP(APELLIDO1) FROM PROFESORES WHERE APELLIDO1 IS NOT NULL)
+INTERSECT
+(SELECT INITCAP(APELLIDO2) FROM ALUMNOS WHERE APELLIDO2 IS NOT NULL))
+UNION
+((SELECT INITCAP(APELLIDO2) FROM PROFESORES WHERE APELLIDO2 IS NOT NULL)
+INTERSECT
+(SELECT INITCAP(APELLIDO1) FROM ALUMNOS WHERE APELLIDO1 IS NOT NULL))
+UNION
+((SELECT INITCAP(APELLIDO2) FROM PROFESORES WHERE APELLIDO2 IS NOT NULL)
+INTERSECT
+(SELECT INITCAP(APELLIDO2) FROM ALUMNOS WHERE APELLIDO2 IS NOT NULL));
+
+--  mejor opciï¿½n
+SELECT DISTINCT INITCAP(ALU.APELLIDO1)
+FROM ALUMNOS ALU, PROFESORES PRO
+WHERE LOWER(ALU.APELLIDO1) = LOWER(PRO.APELLIDO1) OR LOWER(ALU.APELLIDO1) = LOWER(PRO.APELLIDO2)
+UNION
+SELECT DISTINCT INITCAP(ALU.APELLIDO2)
+FROM ALUMNOS ALU, PROFESORES PRO
+WHERE LOWER(ALU.APELLIDO2) = LOWER(PRO.APELLIDO1) OR LOWER(ALU.APELLIDO2) = LOWER(PRO.APELLIDO2);
+
 -- Ejercicio 19 ----------------------------------------------------------------
-(select apellido1
-from profesores where upper(apellido1) like '%LL%')
+(SELECT APELLIDO1
+FROM PROFESORES WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select apellido2
-from profesores where upper(apellido2) like '%LL%')
+(SELECT APELLIDO2
+FROM PROFESORES WHERE UPPER(APELLIDO2) LIKE '%LL%')
 UNION
-(select apellido1
-from alumnos where upper(apellido1) like '%LL%')
+(SELECT APELLIDO1
+FROM ALUMNOS WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select apellido2
-from alumnos where upper(apellido2) like '%LL%');
-
+(SELECT APELLIDO2
+FROM ALUMNOS WHERE UPPER(APELLIDO2) LIKE '%LL%');
 
 -- Ejercicio 20 ---------------------------------------------------------------------
--- Solución del solucionario:
-(select replace(apellido1, 'll', 'y')
-from profesores where upper(apellido1) like '%LL%')
+-- Soluciï¿½n del solucionario:
+(SELECT REPLACE(APELLIDO1, 'LL', 'Y')
+FROM PROFESORES WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select replace(apellido2, 'll', 'y')
-from profesores where upper(apellido2) like '%LL%')
+(SELECT REPLACE(APELLIDO2, 'LL', 'Y')
+FROM PROFESORES WHERE UPPER(APELLIDO2) LIKE '%LL%')
 UNION
-(select replace(apellido1, 'll', 'y')
-from alumnos where upper(apellido1) like '%LL%')
+(SELECT REPLACE(APELLIDO1, 'LL', 'Y')
+FROM ALUMNOS WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select replace(apellido2, 'll', 'y')
-from alumnos where upper(apellido2) like '%LL%');
+(SELECT REPLACE(APELLIDO2, 'LL', 'Y')
+FROM ALUMNOS WHERE UPPER(APELLIDO2) LIKE '%LL%');
 
--- Solución  real
-(select replace(apellido1, 'll', 'y')
-from profesores where upper(apellido1) like '%LL%')
+-- Soluciï¿½n  real
+(SELECT REPLACE(APELLIDO1, 'LL', 'Y')
+FROM PROFESORES WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select replace(apellido2, 'll', 'y')
-from profesores where upper(apellido2) like '%LL%')
+(SELECT REPLACE(APELLIDO2, 'LL', 'Y')
+FROM PROFESORES WHERE UPPER(APELLIDO2) LIKE '%LL%')
 UNION
-(select replace(apellido1, 'll', 'y')
-from alumnos where upper(apellido1) like '%LL%')
+(SELECT REPLACE(APELLIDO1, 'LL', 'Y')
+FROM ALUMNOS WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select replace(apellido2, 'll', 'y')
-from alumnos where upper(apellido2) like '%LL%')
+(SELECT REPLACE(APELLIDO2, 'LL', 'Y')
+FROM ALUMNOS WHERE UPPER(APELLIDO2) LIKE '%LL%')
 
 UNION
 
-(select replace(apellido1, 'LL', 'Y')
-from profesores where upper(apellido1) like '%LL%')
+(SELECT REPLACE(APELLIDO1, 'LL', 'Y')
+FROM PROFESORES WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select replace(apellido2, 'LL', 'Y')
-from profesores where upper(apellido2) like '%LL%')
+(SELECT REPLACE(APELLIDO2, 'LL', 'Y')
+FROM PROFESORES WHERE UPPER(APELLIDO2) LIKE '%LL%')
 UNION
-(select replace(apellido1, 'LL', 'Y')
-from alumnos where upper(apellido1) like '%LL%')
+(SELECT REPLACE(APELLIDO1, 'LL', 'Y')
+FROM ALUMNOS WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select replace(apellido2, 'LL', 'Y')
-from alumnos where upper(apellido2) like '%LL%')
+(SELECT REPLACE(APELLIDO2, 'LL', 'Y')
+FROM ALUMNOS WHERE UPPER(APELLIDO2) LIKE '%LL%')
 
 MINUS(
-(select apellido1
-from profesores where upper(apellido1) like '%LL%')
+(SELECT APELLIDO1
+FROM PROFESORES WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select apellido2
-from profesores where upper(apellido2) like '%LL%')
+(SELECT APELLIDO2
+FROM PROFESORES WHERE UPPER(APELLIDO2) LIKE '%LL%')
 UNION
-(select apellido1
-from alumnos where upper(apellido1) like '%LL%')
+(SELECT APELLIDO1
+FROM ALUMNOS WHERE UPPER(APELLIDO1) LIKE '%LL%')
 UNION
-(select apellido2
-from alumnos where upper(apellido2) like '%LL%'));
+(SELECT APELLIDO2
+FROM ALUMNOS WHERE UPPER(APELLIDO2) LIKE '%LL%'));
 
 -- Reuniones externas: select ... from ... a (left/right) outer join b on () where ...
--- Ejercicio 21-----------------------------------------------------------------------
 
-select asig.nombre, imp.profesor
-from asignaturas asig left outer join impartir imp on(asig.codigo = imp.asignatura)
-where asig.teoricos + asig.practicos != asig.creditos
-      or ((teoricos is null or practicos is null) and creditos is not null); 
+-- Ejercicio 21-----------------------------------------------------------------------
+SELECT ASIG.NOMBRE, IMP.PROFESOR
+FROM ASIGNATURAS ASIG LEFT OUTER JOIN IMPARTIR IMP ON(ASIG.CODIGO = IMP.ASIGNATURA)
+WHERE ASIG.TEORICOS + ASIG.PRACTICOS != ASIG.CREDITOS
+      OR ((TEORICOS IS NULL OR PRACTICOS IS NULL) AND CREDITOS IS NOT NULL);
 
 -- Ejercicio 22 ------------------------------------------------------------------
-select p1.nombre||' '||p1.apellido1||' '||p1.apellido2 "Profesor", p2.nombre||' '||p2.apellido1||' '||p2.apellido2 "Director de tesis"
-from profesores p1 left outer join profesores p2 on (p1.director_tesis = p2.id)
-order by p1.apellido1;
+SELECT P1.NOMBRE||' '||P1.APELLIDO1||' '||P1.APELLIDO2 "PROFESOR", P2.NOMBRE||' '||P2.APELLIDO1||' '||P2.APELLIDO2 "DIRECTOR DE TESIS"
+FROM PROFESORES P1 LEFT OUTER JOIN PROFESORES P2 ON (P1.DIRECTOR_TESIS = P2.ID)
+ORDER BY P1.APELLIDO1;
 
 -- Ejercicio 23 ------------------------------------------------------------------
-select 'El director de '||p1.nombre||' '||p1.apellido1||' '||p1.apellido2||' es '||p2.nombre||' '||p2.apellido1||' '||p2.apellido2 as tesis, nvl(inv.tramos,0)
-from profesores p1, profesores p2 left outer join investigadores inv on(p2.id = inv.id_profesor)
-where p1.director_tesis = p2.id;
+SELECT 'EL DIRECTOR DE '||P1.NOMBRE||' '||P1.APELLIDO1||' '||P1.APELLIDO2||' ES '||P2.NOMBRE||' '||P2.APELLIDO1||' '||P2.APELLIDO2 AS TESIS, NVL(INV.TRAMOS,0)
+FROM PROFESORES P1, PROFESORES P2 LEFT OUTER JOIN INVESTIGADORES INV ON(P2.ID = INV.ID_PROFESOR)
+WHERE P1.DIRECTOR_TESIS = P2.ID;
 
 -- Ejercicio 24 -----------------------------------------------------------------
-select alu1.nombre, alu1.apellido1, alu1.apellido2, alu2.nombre, alu2.apellido1, alu2.apellido2, alu1.fecha_prim_matricula, alu2.fecha_prim_matricula
-from alumnos alu1 left outer join alumnos alu2 on(alu1.fecha_prim_matricula = alu2.fecha_prim_matricula
-                                                    and alu1.dni != alu2.dni)
-order by alu1.apellido1;
+SELECT ALU1.NOMBRE, ALU1.APELLIDO1, ALU1.APELLIDO2, ALU2.NOMBRE, ALU2.APELLIDO1, ALU2.APELLIDO2, ALU1.FECHA_PRIM_MATRICULA, ALU2.FECHA_PRIM_MATRICULA
+FROM ALUMNOS ALU1 LEFT OUTER JOIN ALUMNOS ALU2 ON(ALU1.FECHA_PRIM_MATRICULA = ALU2.FECHA_PRIM_MATRICULA
+                                                    AND ALU1.DNI != ALU2.DNI)
+ORDER BY ALU1.APELLIDO1;
 
 -- Resultado correcto:
-select alu1.nombre, alu1.apellido1, alu1.apellido2, alu2.nombre, alu2.apellido1, alu2.apellido2, alu1.fecha_prim_matricula, alu2.fecha_prim_matricula
-from alumnos alu1 left outer join alumnos alu2 on(alu1.fecha_prim_matricula like alu2.fecha_prim_matricula
-                                                    and alu1.dni != alu2.dni)
-order by alu1.apellido1;
+SELECT ALU1.NOMBRE, ALU1.APELLIDO1, ALU1.APELLIDO2, ALU2.NOMBRE, ALU2.APELLIDO1, ALU2.APELLIDO2, ALU1.FECHA_PRIM_MATRICULA, ALU2.FECHA_PRIM_MATRICULA
+FROM ALUMNOS ALU1 LEFT OUTER JOIN ALUMNOS ALU2 ON(ALU1.FECHA_PRIM_MATRICULA LIKE ALU2.FECHA_PRIM_MATRICULA
+                                                    AND ALU1.DNI != ALU2.DNI)
+ORDER BY ALU1.APELLIDO1;
 
 -- Ejercicio 25
-select asig.nombre as asignatura, imp.curso, imp.grupo, pro.nombre, pro.apellido1
-from asignaturas asig left outer join impartir imp on (asig.codigo = imp.asignatura) 
-		      left outer join profesores pro on (imp.profesor = pro.id)
-order by asig.nombre;
-      
+SELECT ASIG.NOMBRE AS ASIGNATURA, IMP.CURSO, IMP.GRUPO, PRO.NOMBRE, PRO.APELLIDO1
+FROM ASIGNATURAS ASIG LEFT OUTER JOIN IMPARTIR IMP ON (ASIG.CODIGO = IMP.ASIGNATURA)
+		      LEFT OUTER JOIN PROFESORES PRO ON (IMP.PROFESOR = PRO.ID)
+ORDER BY ASIG.NOMBRE;
+
 -- Subconsultas------------------------------------------------------------------
 
 -- Ejercicio 26 -------------------------------------------------------------------
+SELECT NOMBRE, APELLIDO1, ID
+FROM PROFESORES PRO
+WHERE ID NOT IN (SELECT PROFESOR
+                  FROM IMPARTIR IMP);
 
-select nombre, apellido1, id
-from profesores pro
-where id not in (select profesor
-                  from impartir imp); 
-                  
-select nombre, apellido1, id
-from profesores pro
-where not exists (select profesor
-                  from impartir imp
-                  where pro.id = imp.profesor);
+SELECT NOMBRE, APELLIDO1, ID
+FROM PROFESORES PRO
+WHERE NOT EXISTS (SELECT PROFESOR
+                  FROM IMPARTIR IMP
+                  WHERE PRO.ID = IMP.PROFESOR);
 
 -- Ejercicio 27 --------------------------------------------------------------------
-select nombre, apellido1, apellido2
-from alumnos
-where dni in (select alumno from matricular
-              where asignatura = 115
-              and genero = 'FEM') 
-      and rownum < 3;
-      
-select nombre, apellido1, apellido2
-from alumnos al
-where exists (select * from matricular mat
-              where asignatura = 115
-              and genero = 'FEM'
-              and al.dni = mat.alumno) 
-      and rownum < 3;
-      
+SELECT NOMBRE, APELLIDO1, APELLIDO2
+FROM ALUMNOS
+WHERE DNI IN (SELECT ALUMNO FROM MATRICULAR
+              WHERE ASIGNATURA = 115
+              AND GENERO = 'FEM')
+      AND ROWNUM < 3;
+
+SELECT NOMBRE, APELLIDO1, APELLIDO2
+FROM ALUMNOS AL
+WHERE EXISTS (SELECT * FROM MATRICULAR MAT
+              WHERE ASIGNATURA = 115
+              AND GENERO = 'FEM'
+              AND AL.DNI = MAT.ALUMNO)
+      AND ROWNUM < 3;
+
 -- Ejercicio 28 ------------------------------------------------------------------
-select *
-from profesores
-where id not in (select director_tesis
-                  from profesores
-                  where director_tesis is not null); 
-                                                
-                  
-select *
-from profesores p1
-where not exists (select *
-                  from profesores p2
-                  where p1.id = p2.director_tesis); 
-                  
+SELECT *
+FROM PROFESORES
+WHERE ID NOT IN (SELECT DIRECTOR_TESIS
+                  FROM PROFESORES
+                  WHERE DIRECTOR_TESIS IS NOT NULL);
+
+
+SELECT *
+FROM PROFESORES P1
+WHERE NOT EXISTS (SELECT *
+                  FROM PROFESORES P2
+                  WHERE P1.ID = P2.DIRECTOR_TESIS);
+
 -- Ejercicio 29 -----------------------------------------------------------------
-select nombre, codigo 
-from asignaturas a1
-where a1.creditos < any(select creditos
-                      from asignaturas a2
-                      where a1.curso = a2.curso);
-                      
+SELECT NOMBRE, CODIGO
+FROM ASIGNATURAS A1
+WHERE A1.CREDITOS < ANY(SELECT CREDITOS
+                      FROM ASIGNATURAS A2
+                      WHERE A1.CURSO = A2.CURSO);
+
 -- Ejercicio 30 -------------------------------------------------------------------
-select nombre, codigo
-from asignaturas
-where curso is not null
+SELECT NOMBRE, CODIGO
+FROM ASIGNATURAS
+WHERE CURSO IS NOT NULL
 MINUS
-(select nombre, codigo 
-from asignaturas a1
-where a1.creditos < any(select creditos
-                      from asignaturas a2
-                      where a1.curso = a2.curso));
+(SELECT NOMBRE, CODIGO
+FROM ASIGNATURAS A1
+WHERE A1.CREDITOS < ANY(SELECT CREDITOS
+                      FROM ASIGNATURAS A2
+                      WHERE A1.CURSO = A2.CURSO));
