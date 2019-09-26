@@ -1,0 +1,28 @@
+http://latecladeescape.com/h/2015/08/frecuencia-de-las-notas-musicales#
+
+Aclaración: La#(sostenido) = Sib(bemol)
+
+MICROSEGUNDOS NOTAS 4ª OCTAVA:
+DO: 1911
+DO #: 1803
+RE: 1702
+RE #: 1607
+MI: 1516
+FA: 1431
+FA #: 1351
+SOL: 1275
+SOL# (sostenido): 1203
+LA: 1136
+LA#: 1072
+SI: 1012
+
+DO AGUDO (5ª OCTAVA): 955
+DO AGUDO #: 901
+RE AGUDO (5ª OCTAVA): 851
+RE AGUDO #: 803
+MI AGUDO (5ª OCTAVA): 758
+FA AGUDO (5ª OCTAVA): 715
+FA AGUDO # : 675
+SOL AGUDO (5ª OCTAVA): 637
+LA AGUDO (5ª OCTAVA): 568
+SI AGUDO (5ª OCTAVA): 506
