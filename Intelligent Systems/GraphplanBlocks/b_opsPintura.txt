@@ -1,0 +1,124 @@
+By the way, everything up to the first parenthesis is a comment...
+
+(operator
+  COGER
+  (params
+	(<x> OBJETO)
+	(<c> COLOR))
+  (preconds 
+  	(libre <x> <c>)
+	(en-mesa <x> <c>)
+	(mano-libre)
+)
+  (effects
+	(cogido <x> <c>)
+	(del libre <x> <c>)
+	(del en-mesa <x> <c>)
+	(del mano-libre)
+	)
+)
+
+(operator
+  SOLTAR
+  (params
+	(<x> OBJETO) 
+	(<c> COLOR)
+	)
+  (preconds 
+  	(cogido <x> <c>)
+)
+  (effects
+	(del cogido <x> <c>)
+	(libre <x> <c>)
+	(en-mesa <x> <c>)
+	(mano-libre)
+	)
+)
+
+(operator
+  APILAR
+  (params
+	(<x> OBJETO)
+	(<c> COLOR)
+	(<y> OBJETO)
+	(<c> COLOR))
+  (preconds 
+  	(cogido <x> <c>)
+	(libre <y> <c>))
+  (effects
+	(sobre <x> <c> <y> <c>)
+	(mano-libre)
+	(libre <x> <c>)
+	(del cogido <x> <c>)
+	(del libre <y> <c>))
+)
+
+(operator
+  APILAR
+  (params
+	(<x> OBJETO)
+	(<c1> COLOR)
+	(<y> OBJETO)
+	(<c2> COLOR))
+  (preconds 
+  	(cogido <x> <c1>)
+	(libre <y> <c2>))
+  (effects
+	(sobre <x> <c1> <y> <c2>)
+	(mano-libre)
+	(libre <x> <c1>)
+	(del cogido <x> <c1>)
+	(del libre <y> <c2>))
+)
+
+(operator
+  DESAPI
+  (params
+	(<x> OBJETO)
+	(<c> COLOR)
+	(<y> OBJETO)
+	(<c> COLOR))
+  (preconds 
+  	(sobre <x> <c> <y> <c>)
+	(libre <x> <c>)
+	(mano-libre))
+  (effects
+	(del sobre <x> <c> <y> <c>)
+	(del mano-libre)
+	(del libre <x> <c>)
+	(cogido <x> <c>)
+	(libre <y> <c>))
+)
+
+(operator
+  DESAPI
+  (params
+	(<x> OBJETO)
+	(<c1> COLOR)
+	(<y> OBJETO)
+	(<c2> COLOR))
+  (preconds 
+  	(sobre <x> <c1> <y> <c2>)
+	(libre <x> <c1>)
+	(mano-libre))
+  (effects
+	(del sobre <x> <c1> <y> <c2>)
+	(del mano-libre)
+	(del libre <x> <c1>)
+	(cogido <x> <c1>)
+	(libre <y> <c2>))
+)
+
+(operator
+  PINTAR
+  (params
+	(<x> OBJETO)
+	(<cini> COLOR)
+	(<cfin> COLOR))
+  (preconds
+	(cogido <x> <cini>))
+  (effects
+	(del cogido <x> <cini>)
+	(cogido <x> <cfin>))
+)
+

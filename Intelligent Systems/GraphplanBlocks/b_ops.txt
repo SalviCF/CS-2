@@ -1,0 +1,65 @@
+By the way, everything up to the first parenthesis is a comment...
+
+(operator
+  COGER
+  (params
+	(<x> OBJETO) 
+	)
+  (preconds 
+  	(libre <x>)
+	(en-mesa <x>)
+	(mano-libre))
+  (effects
+	(cogido <x>)
+	(del libre <x>)
+	(del en-mesa <x>)
+	(del mano-libre)
+	)
+)
+
+(operator
+  SOLTAR
+  (params
+	(<x> OBJETO) 
+	)
+  (preconds 
+  	(cogido <x>)
+)
+  (effects
+	(del cogido <x>)
+	(libre <x>)
+	(en-mesa <x>)
+	(mano-libre)
+	)
+)
+
+(operator
+  APILAR
+  (params
+	(<x> OBJETO)
+	(<y> OBJETO))
+  (preconds 
+  	(cogido <x>)
+	(libre <y>))
+  (effects
+	(sobre <x> <y>)
+	(mano-libre)
+	(libre <x>)
+	(del cogido <x>)
+	(del libre <y>)))
+
+(operator
+  DESAPI
+  (params
+	(<x> OBJETO)
+	(<y> OBJETO))
+  (preconds 
+  	(sobre <x> <y>)
+	(libre <x>)
+	(mano-libre))
+  (effects
+	(del sobre <x> <y>)
+	(del mano-libre)
+	(del libre <x>)
+	(cogido <x>)
+	(libre <y>)))

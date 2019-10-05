@@ -1,0 +1,14 @@
+(a OBJETO)
+(b OBJETO)
+(c OBJETO)
+
+(preconds
+	(libre c)
+	(sobre c a)
+	(en-mesa a)
+	(libre b)
+	(en-mesa b)
+	(mano-libre))
+(effects
+	(sobre a b)
+	(sobre b c))

@@ -1,0 +1,45 @@
+C:\Users\salvi>graphplan -d -o hanoi_ops.txt -f hanoi_facts.txt
+MOVER
+MOVER
+MOVER
+MOVER
+facts loaded.
+time: 1, 21 facts and 6 exclusive pairs.
+time: 2, 24 facts and 17 exclusive pairs.
+time: 3, 28 facts and 35 exclusive pairs.
+Goals reachable at 3 steps but mutually exclusive.
+time: 4, 30 facts and 42 exclusive pairs.
+Goals first reachable in 4 steps.
+270 nodes created.
+goals at time 5:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_P3
+
+Can't solve in 4 steps
+time: 5, 30 facts and 41 exclusive pairs.
+98 new nodes added.
+goals at time 6:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_P3
+
+Can't solve in 5 steps
+time: 6, 30 facts and 41 exclusive pairs.
+98 new nodes added.
+goals at time 7:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_P3
+
+Can't solve in 6 steps
+time: 7, 30 facts and 41 exclusive pairs.
+98 new nodes added.
+goals at time 8:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_P3
+
+1 MOVER_D1_D2_P3
+2 MOVER_D2_D3_P2
+3 MOVER_D1_P3_D2
+4 MOVER_D3_P1_P3
+5 MOVER_D1_D2_P1
+6 MOVER_D2_P2_D3
+7 MOVER_D1_P1_D2
+14 entries in hash table, 8 hash hits, avg set size 6.
+28 total set-creation steps (entries + hits + plan length - 1).
+21 actions tried
+  0.03 secs

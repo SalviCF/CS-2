@@ -1,0 +1,203 @@
+C:\Users\salvi>graphplan -d -o hanoi5_ops.txt -f hanoi5_facts.txt
+MOVER
+MOVER
+MOVER
+MOVER
+facts loaded.
+time: 1, 36 facts and 6 exclusive pairs.
+time: 2, 39 facts and 17 exclusive pairs.
+time: 3, 43 facts and 35 exclusive pairs.
+time: 4, 48 facts and 63 exclusive pairs.
+time: 5, 54 facts and 103 exclusive pairs.
+Goals reachable at 5 steps but mutually exclusive.
+time: 6, 58 facts and 126 exclusive pairs.
+Goals first reachable in 6 steps.
+774 nodes created.
+goals at time 7:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 6 steps
+time: 7, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 8:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 7 steps
+time: 8, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 9:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 8 steps
+time: 9, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 10:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 9 steps
+time: 10, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 11:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 10 steps
+time: 11, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 12:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 11 steps
+time: 12, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 13:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 12 steps
+time: 13, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 14:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 13 steps
+time: 14, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 15:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 14 steps
+time: 15, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 16:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 15 steps
+time: 16, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 17:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 16 steps
+time: 17, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 18:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 17 steps
+time: 18, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 19:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 18 steps
+time: 19, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 20:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 19 steps
+time: 20, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 21:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 20 steps
+time: 21, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 22:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 21 steps
+time: 22, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 23:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 22 steps
+time: 23, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 24:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 23 steps
+time: 24, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 25:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 24 steps
+time: 25, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 26:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 25 steps
+time: 26, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 27:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 26 steps
+time: 27, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 28:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 27 steps
+time: 28, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 29:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 28 steps
+time: 29, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 30:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 29 steps
+time: 30, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 31:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+Can't solve in 30 steps
+time: 31, 58 facts and 120 exclusive pairs.
+226 new nodes added.
+goals at time 32:
+  sobre_D1_D2 sobre_D2_D3 sobre_D3_D4 sobre_D4_D5 sobre_D5_P3
+
+1 MOVER_D1_D2_P3
+2 MOVER_D2_D3_P2
+3 MOVER_D1_P3_D2
+4 MOVER_D3_D4_P3
+5 MOVER_D1_D2_D4
+6 MOVER_D2_P2_D3
+7 MOVER_D1_D4_D2
+8 MOVER_D4_D5_P2
+9 MOVER_D1_D2_D4
+10 MOVER_D2_D3_D5
+11 MOVER_D1_D4_D2
+12 MOVER_D3_P3_D4
+13 MOVER_D1_D2_P3
+14 MOVER_D2_D5_D3
+15 MOVER_D1_P3_D2
+16 MOVER_D5_P1_P3
+17 MOVER_D1_D2_P1
+18 MOVER_D2_D3_D5
+19 MOVER_D1_P1_D2
+20 MOVER_D3_D4_P1
+21 MOVER_D1_D2_D4
+22 MOVER_D2_D5_D3
+23 MOVER_D1_D4_D2
+24 MOVER_D4_P2_D5
+25 MOVER_D1_D2_D4
+26 MOVER_D2_D3_P2
+27 MOVER_D1_D4_D2
+28 MOVER_D3_P1_D4
+29 MOVER_D1_D2_P1
+30 MOVER_D2_P2_D3
+31 MOVER_D1_P1_D2
+20635 entries in hash table, 51004 hash hits, avg set size 14.
+71669 total set-creation steps (entries + hits + plan length - 1).
+55168 actions tried
+  1.46 secs

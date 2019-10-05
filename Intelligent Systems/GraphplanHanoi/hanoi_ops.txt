@@ -1,0 +1,76 @@
+Author: Salvi CF
+
+Se definen los cuatro casos de la acción MOVER.
+El primer parámetro es el disco que se mueve. 
+El segundo desde dónde se mueve, desde encima de otro disco o desde un pivote [es el único disco]
+El tercero hacia dónde se mueve, hacia encima de otro disco o hacia un pivote [es el único disco]
+
+(operator
+  MOVER
+  (params
+	(<d1> DISCO)
+	(<d2> DISCO)
+	(<p> PIVOTE))
+  (preconds
+	(libre <d1>)
+	(libre <p>)
+	(sobre <d1> <d2>))
+  (effects
+	(sobre <d1> <p>)
+	(libre <d2>)
+	(del libre <p>)
+	(del sobre <d1> <d2>))
+) 
+
+(operator
+  MOVER
+  (params
+	(<d> DISCO)
+	(<p1> PIVOTE)
+	(<p2> PIVOTE))
+  (preconds
+	(libre <d>)
+	(libre <p2>)
+	(sobre <d> <p1>))
+  (effects
+	(libre <p1>)
+	(sobre <d> <p2>)
+	(del libre <p2>)
+	(del sobre <d> <p1>))
+)
+
+(operator
+  MOVER
+  (params
+	(<d1> DISCO)
+	(<p> PIVOTE)
+	(<d2> DISCO))
+  (preconds
+	(libre <d1>)
+	(libre <d2>)
+	(sobre <d1> <p>)
+	(menor <d1> <d2>))
+  (effects
+	(sobre <d1> <d2>)
+	(libre <p>)
+	(del libre <d2>)
+	(del sobre <d1> <p>))
+)
+
+(operator
+  MOVER
+  (params
+	(<d1> DISCO)
+	(<d2> DISCO)
+	(<d3> DISCO))
+  (preconds
+	(libre <d1>)
+	(libre <d3>)
+	(sobre <d1> <d2>)
+	(menor <d1> <d3>))
+  (effects
+	(sobre <d1> <d3>)
+	(libre <d2>)
+	(del libre <d3>)
+	(del sobre <d1> <d2>))
+)

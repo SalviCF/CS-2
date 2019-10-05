@@ -1,0 +1,18 @@
+([a OBJETO)
+([b OBJETO)
+([c OBJETO)
+(green] COLOR)
+(yellow] COLOR)
+(red] COLOR)
+
+(preconds
+	(mano-libre)
+	(en-mesa [c red])
+	(sobre [b red] [c red])
+	(sobre [a red] [b red])
+	(libre [a red])
+)
+(effects
+	(sobre [b green] [c green])
+	(sobre [a green] [b green])
+)
