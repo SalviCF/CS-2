@@ -1,5 +1,4 @@
-// Alumno: Salvador Carrillo Fuentes (44653917-S)
-// G.I. Informática. Grupo C
+// Author: Salvi CF
 
 /**
 UNIX Shell Project
@@ -12,12 +11,12 @@ Some code adapted from "Fundamentos de Sistemas Operativos", Silberschatz et al.
 
 To compile and run the program:
    $ gcc Shell_project.c job_control.c -o Shell
-   $ ./Shell          
+   $ ./Shell
 	(then type ^D to exit program)
 
 **/
 
-#include "job_control.h"   // remember to compile with module job_control.c 
+#include "job_control.h"   // remember to compile with module job_control.c
 
 #define MAX_LINE 256 /* 256 chars per line, per command, should be enough. */
 
@@ -25,7 +24,7 @@ job *lista; // para procesos en background, puntero a job
 
 /* Manejador SIGCHLD */
 // wait a procesos en bg y suspendidos
-void handler(int num){ 
+void handler(int num){
 	int i, status, info, pid_wait;
 	enum status status_res;
 	job *aux; // puntero a job
@@ -38,7 +37,7 @@ void handler(int num){
 			status_res = analyze_status(status, &info); // para imprimir la información del proceso acabado
 			printf("\nBackground process change: pid: %d, %s, command: %s, info: %d\n",
 					pid_wait, status_strings[status_res], aux->command, info);
-			if ((status_res == EXITED) || (status_res == SIGNALED)){  
+			if ((status_res == EXITED) || (status_res == SIGNALED)){
 				delete_job(lista, aux); // borro el job de la lista (terminado naturalmente o víctima de una señal para morir)
 				i--; // decremento el contador para volver a la posición anterior tras el incremento al final del for
 			}
@@ -55,7 +54,7 @@ void handler(int num){
 
 
 // -----------------------------------------------------------------------
-//                            MAIN          
+//                            MAIN
 // -----------------------------------------------------------------------
 
 int main(void)
@@ -78,11 +77,11 @@ int main(void)
 	signal(SIGCHLD, handler); // armo la señal
 
 	while (1)   /* Program terminates normally inside get_command() after ^D is typed*/
-	{   		
+	{
 		printf("%s$ ",getcwd(path, 1024)); // path de directorios. Imprime prompt
-		fflush(stdout);	// limpia salida estándar	
-		get_command(inputBuffer, MAX_LINE, args, &background);  /* get next command */ 
-		
+		fflush(stdout);	// limpia salida estándar
+		get_command(inputBuffer, MAX_LINE, args, &background);  /* get next command */
+
 		if(args[0]==NULL) continue; // if empty command. continue vuelve al inicio del while
 
 		/* Comando interno exit */
@@ -91,13 +90,13 @@ int main(void)
 		}
 
 		/* Comando interno cd */
-		if (strcmp(args[0],"cd") == 0){ 
+		if (strcmp(args[0],"cd") == 0){
 			if (args[1] != NULL){
 				if (strcmp(args[1], "~") == 0){ // me voy al home si se introduce el caracter ~
 					chdir(getenv("HOME")); // cambio el directorio al de la variable de entorno HOME
 				} else if (chdir(args[1]) == -1){ // error
 					fprintf(stderr, "cd: %s: No such file or directory\n", args[1]);
-				} 
+				}
 			} else if (args[1]==NULL){ // cd sin argumentos también voy al home
 				chdir(getenv("HOME"));
 			}
@@ -111,7 +110,7 @@ int main(void)
 				printf("La lista está vacía\n");
 			}else{
 				print_job_list(lista); // imprime el contenido de la lista
-			} 
+			}
 			unblock_SIGCHLD();
 			continue;
 		}
@@ -172,7 +171,7 @@ int main(void)
 						aux = get_item_bypos(lista, atoi(args[1])); // uso atoi() para convertir a int el segundo argumento
 					}
 				}
-				aux->state = BACKGROUND; // actualizo el estdo 
+				aux->state = BACKGROUND; // actualizo el estdo
 				killpg(aux->pgid, SIGCONT);	// envío la señal de continuar al grupo de procesos completo
 				printf("Background job running... pid: %d, command: %s\n", aux->pgid, aux->command);
 			}
@@ -183,8 +182,8 @@ int main(void)
 		/* the steps are:
 			 (1) fork a child process using fork()
 			 (2) the child process will invoke execvp()
-			 (3) if background == 0, the parent will wait, otherwise continue 
-			 (4) Shell shows a status message for processed command 
+			 (3) if background == 0, the parent will wait, otherwise continue
+			 (4) Shell shows a status message for processed command
 			 (5) loop returns to get_commnad() function
 		*/
 
@@ -193,10 +192,10 @@ int main(void)
 
 		/* Comandos externos */
 
-		/* 
+		/*
 		Llamada a fork:
 		Si todo sale bien, al padre le devuelve el pid del hijo y al hijo le devuelve un 0.
-		Si hay algún error, devuelve un -1 al padre y no se crea el nuevo proceso. 
+		Si hay algún error, devuelve un -1 al padre y no se crea el nuevo proceso.
 		*/
 
 		if (pid_fork < 0){ // rama error fork
@@ -210,11 +209,11 @@ int main(void)
 			}
 		// (2) the child process will invoke execvp()
 			execvp(args[0], args); // carga la imagen del comando hijo
-			fprintf(stderr, "Error, command not found: %s\n", args[0]); 
+			fprintf(stderr, "Error, command not found: %s\n", args[0]);
 			exit(EXIT_FAILURE); // no se ejecutó el comando. El hijo falla, debe morir
 		} else { // rama padre
 			new_process_group(pid_fork); // crea un nuevo grupo cuyo líder es el hijo, se emancipa
-		// (3) if background == 0, the parent will wait, otherwise continue 
+		// (3) if background == 0, the parent will wait, otherwise continue
 			if (!background){ // fg
 				set_terminal(pid_fork); // se cede el terminal al hijo
 				pid_wait = waitpid(pid_fork, &status, WUNTRACED); // el padre espera a que muera o cambie de estado. Es bloqueante
